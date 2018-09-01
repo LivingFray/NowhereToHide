@@ -23,6 +23,8 @@ public class Gun : MonoBehaviour {
 
     float reloading;
 
+    bool hasShot;
+
     void Start () {
         ammo = gunProperties.maxAmmo;
         clip = gunProperties.maxClip;
@@ -30,6 +32,7 @@ public class Gun : MonoBehaviour {
         reloading = 0.0f;
         projTransform = projectileOrigin.transform;
         audioSource = GetComponent<AudioSource>();
+        hasShot = false;
 	}
 
     //Try to shoot after we know if the trigger is down
@@ -54,6 +57,10 @@ public class Gun : MonoBehaviour {
         lastFired += Time.deltaTime;
         //Check if trigger is held
         if (!triggerHeld) {
+            hasShot = false;
+            return;
+        }
+        if (hasShot && !gunProperties.auto) {
             return;
         }
         //Check if gun can fire yet
@@ -63,9 +70,7 @@ public class Gun : MonoBehaviour {
             //Actually shoot
             Fire();
             //If not full auto, prevent next shot
-            if (!gunProperties.auto) {
-                triggerHeld = false;
-            }
+            hasShot = true;
         }
     }
 
