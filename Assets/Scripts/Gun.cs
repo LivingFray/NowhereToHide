@@ -80,15 +80,15 @@ public class Gun : MonoBehaviour {
             audioSource.PlayOneShot(gunProperties.empty, gunProperties.emptyVolume);
             return;
         }
+        Quaternion spread = Quaternion.Euler(new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f).normalized * gunProperties.inaccuracy);
         //Create projectile
-        GameObject proj = Instantiate(gunProperties.projectile, projTransform.position + projTransform.forward * 0.5f, projTransform.rotation);
+        GameObject proj = Instantiate(gunProperties.projectile, projTransform.position + projTransform.forward * 0.5f, projTransform.rotation * spread);
         Projectile projectile = proj.GetComponent<Projectile>();
         projectile.damage = gunProperties.damage;
         projectile.owner = owner;
         projectile.startPos = muzzle.transform.position;
         //Expend ammo
         Ammo--;
-        Debug.Log(Ammo + "/" + Clip);
         //Pretty effects here
         muzzle.Play();
         audioSource.pitch = Random.Range(gunProperties.firePitchMin, gunProperties.firePitchMax);

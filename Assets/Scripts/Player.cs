@@ -17,6 +17,7 @@ public class Player : Entity {
     }
 
     protected override void OnUpdate() {
+        //Lock mouse to window
         if (Input.GetKeyDown(KeyCode.Escape)) {
             mouseLocked = !mouseLocked;
             if (mouseLocked) {
