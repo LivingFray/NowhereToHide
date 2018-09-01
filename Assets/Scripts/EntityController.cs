@@ -10,4 +10,6 @@ public class EntityController : ScriptableObject {
     }
     public virtual void OnFixedUpdate(Entity entity) {
     }
+    public virtual void OnDied(Entity entity) {
+    }
 }

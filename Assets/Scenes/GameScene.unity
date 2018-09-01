@@ -563,6 +563,8 @@ MonoBehaviour:
   entityController: {fileID: 11400000, guid: 0fd2e1c2a6b4ab74ca521627a351d128, type: 2}
   head: {fileID: 2143347677}
   rigidbody: {fileID: 0}
+  lookAngle: {x: 0, y: 0, z: 0}
+  equippedGun: {fileID: 1755026316}
   pistol: {fileID: 1755026315}
   gunHolder: {fileID: 521054573}
 --- !u!136 &839161646
@@ -1250,9 +1252,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f8524800a79c845a6ffda8325618db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityController: {fileID: 0}
-  head: {fileID: 0}
+  entityController: {fileID: 11400000, guid: c84e15bbe33e21147b52ea78e377c72b, type: 2}
+  head: {fileID: 1354918268}
   rigidbody: {fileID: 0}
+  lookAngle: {x: 0, y: 0, z: 0}
+  equippedGun: {fileID: 0}
   pistol: {fileID: 346621884}
   gunHolder: {fileID: 970622328}
 --- !u!1 &1725370662

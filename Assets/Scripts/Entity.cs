@@ -16,6 +16,8 @@ public class Entity : MonoBehaviour {
 
     public Vector3 lookAngle;
 
+    public Gun equippedGun;
+
 	// Use this for initialization
 	void Start () {
         Health = 100;
@@ -37,10 +39,10 @@ public class Entity : MonoBehaviour {
 
     public void Damage(int damage) {
         Health -= damage;
-        if(Health < 0) {
+        if(Health <= 0) {
             Health = 0;
             //TODO: Respawn
-            //entityController.OnDied(this);
+            entityController.OnDied(this);
         }
     }
 }

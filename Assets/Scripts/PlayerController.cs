@@ -8,12 +8,16 @@ public class PlayerController : EntityController {
     public float lookSensitivity;
 
     public override void OnUpdate(Entity entity) {
-
+        entity.equippedGun.triggerHeld = Input.GetButton("Fire1");
     }
 
     public override void OnFixedUpdate(Entity entity) {
         MovePlayer(entity);
         MoveCamera(entity);
+    }
+
+    public override void OnDied(Entity entity) {
+        Debug.Log("DEADED");
     }
 
     void MoveCamera(Entity entity) {

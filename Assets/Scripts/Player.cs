@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Entity {
-    //temp
-    public GameObject pistol;
-
-    //The gameobject that contains weapons in the view model
-    public GameObject gunHolder;
-
-    Gun gun;
-
     bool mouseLocked;
 
     // Use this for initialization
     protected override void OnStart () {
-        gun = pistol.GetComponent<Gun>();
         mouseLocked = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -33,9 +24,4 @@ public class Player : Entity {
             }
         }
     }
-	
-	// Update is called once per frame
-	//void Update () {
-     //   gun.triggerHeld = Input.GetButton("Fire1");
-	//}
 }
