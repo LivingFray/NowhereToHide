@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Player Controller", menuName = "Controllers/Player")]
 public class PlayerController : EntityController {
@@ -8,8 +6,6 @@ public class PlayerController : EntityController {
     public float lookSensitivity;
 
     public float jumpForce;
-
-    public GameObject crosshair; 
 
     public override void OnUpdate(Entity entity) {
         entity.equippedGun.triggerHeld = Input.GetButton("Fire1");

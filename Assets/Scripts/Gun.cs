@@ -15,8 +15,8 @@ public class Gun : MonoBehaviour {
 
     Transform projTransform;
 
-    int ammo;
-    int clip;
+    public int Ammo { get; private set; }
+    public int Clip { get; private set; }
     float lastFired;
 
     public bool triggerHeld;
@@ -26,8 +26,8 @@ public class Gun : MonoBehaviour {
     bool hasShot;
 
     void Start () {
-        ammo = gunProperties.maxAmmo;
-        clip = gunProperties.maxClip;
+        Ammo = gunProperties.maxAmmo;
+        Clip = gunProperties.maxClip;
         lastFired = 0;
         reloading = 0.0f;
         projTransform = projectileOrigin.transform;
@@ -46,9 +46,8 @@ public class Gun : MonoBehaviour {
             reloading -= Time.deltaTime;
             if(reloading <= 0.0f) {
                 reloading = 0.0f;
-                ammo = System.Math.Min(clip, gunProperties.maxAmmo);
-                clip -= ammo;
-                Debug.Log(ammo + "/" + clip);
+                Ammo = System.Math.Min(Clip, gunProperties.maxAmmo);
+                Clip -= Ammo;
             }
         }
     }
@@ -76,7 +75,7 @@ public class Gun : MonoBehaviour {
 
     void Fire() {
         //Checks that gun can be shot
-        if(reloading > 0.0f || ammo == 0) {
+        if(reloading > 0.0f || Ammo == 0) {
             audioSource.pitch = Random.Range(gunProperties.emptyPitchMin, gunProperties.emptyPitchMax);
             audioSource.PlayOneShot(gunProperties.empty, gunProperties.emptyVolume);
             return;
@@ -88,22 +87,22 @@ public class Gun : MonoBehaviour {
         projectile.owner = owner;
         projectile.startPos = muzzle.transform.position;
         //Expend ammo
-        ammo--;
-        Debug.Log(ammo + "/" + clip);
+        Ammo--;
+        Debug.Log(Ammo + "/" + Clip);
         //Pretty effects here
         muzzle.Play();
         audioSource.pitch = Random.Range(gunProperties.firePitchMin, gunProperties.firePitchMax);
         audioSource.PlayOneShot(gunProperties.fire, gunProperties.fireVolume);
         //Auto-reload
-        if (ammo == 0 && clip > 0) {
+        if (Ammo == 0 && Clip > 0) {
             reloading = gunProperties.reloadTime;
         }
     }
 
     public void Reload() {
         if(reloading <= 0.0f) {
-            clip += ammo;
-            ammo = 0;
+            Clip += Ammo;
+            Ammo = 0;
             reloading = gunProperties.reloadTime;
         }
     }

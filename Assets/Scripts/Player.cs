@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Entity {
     bool mouseLocked;
 
     public GameObject crosshair;
     RectTransform crossTrans;
+    public Text ammo;
 
     // Use this for initialization
     protected override void OnStart () {
@@ -34,6 +34,7 @@ public class Player : Entity {
                 crossTrans.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
         }
+        ammo.text = equippedGun.Ammo + "/" + equippedGun.Clip;
     }
 
     public override void OnHit() {
