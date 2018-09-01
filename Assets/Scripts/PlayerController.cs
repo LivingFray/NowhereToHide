@@ -13,6 +13,9 @@ public class PlayerController : EntityController {
 
     public override void OnUpdate(Entity entity) {
         entity.equippedGun.triggerHeld = Input.GetButton("Fire1");
+        if(Input.GetButtonDown("Reload")) {
+            entity.equippedGun.Reload();
+        }
     }
 
     public override void OnFixedUpdate(Entity entity) {

@@ -99,4 +99,12 @@ public class Gun : MonoBehaviour {
             reloading = gunProperties.reloadTime;
         }
     }
+
+    public void Reload() {
+        if(reloading <= 0.0f) {
+            clip += ammo;
+            ammo = 0;
+            reloading = gunProperties.reloadTime;
+        }
+    }
 }
