@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b58ef9852a55654c9a1160bbcb3ce98, type: 3}
   m_Name: AIController
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 10

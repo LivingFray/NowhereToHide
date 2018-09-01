@@ -6,6 +6,9 @@ public class Gun : MonoBehaviour {
     public GunScriptable gunProperties;
 
     public GameObject projectileOrigin;
+
+    public ParticleSystem muzzle;
+
     Transform projTransform;
 
     int ammo;
@@ -72,7 +75,9 @@ public class Gun : MonoBehaviour {
         Projectile projectile = proj.GetComponent<Projectile>();
         projectile.damage = gunProperties.damage;
         projectile.owner = gameObject;
+        projectile.startPos = muzzle.transform.position;
         ammo--;
+        muzzle.Play();
         Debug.Log(ammo + "/" + clip);
         if(ammo == 0 && clip > 0) {
             reloading = gunProperties.reloadTime;

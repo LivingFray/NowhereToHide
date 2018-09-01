@@ -8,11 +8,12 @@ public class Projectile : MonoBehaviour {
 
     public GameObject owner;
 
+    public Vector3 startPos;
+
     protected void OnHit(GameObject target) {
         Entity entity = target.GetComponent<Entity>();
         if(entity != null) {
             entity.Damage(damage);
         }
-        Destroy(gameObject);
     }
 }
