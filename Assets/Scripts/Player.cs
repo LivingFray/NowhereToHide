@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : Entity {
     //temp
     public GameObject pistol;
 
@@ -11,13 +11,31 @@ public class Player : MonoBehaviour {
 
     Gun gun;
 
+    bool mouseLocked;
+
     // Use this for initialization
-    void Start () {
+    protected override void OnStart () {
         gun = pistol.GetComponent<Gun>();
-	}
+        mouseLocked = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    protected override void OnUpdate() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            mouseLocked = !mouseLocked;
+            if (mouseLocked) {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            } else {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+        }
+    }
 	
 	// Update is called once per frame
-	void Update () {
-        gun.triggerHeld = Input.GetButton("Fire1");
-	}
+	//void Update () {
+     //   gun.triggerHeld = Input.GetButton("Fire1");
+	//}
 }
