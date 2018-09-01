@@ -22,4 +22,17 @@ public class GunScriptable : ScriptableObject {
     public float inaccuracy;
     //The time it takes to reload the gun
     public float reloadTime;
+
+    public AudioClip fire;
+    public float firePitchMin;
+    public float firePitchMax;
+    public float fireVolume;
+
+    public AudioClip reload;
+
+
+    public AudioClip empty;
+    public float emptyPitchMin;
+    public float emptyPitchMax;
+    public float emptyVolume;
 }

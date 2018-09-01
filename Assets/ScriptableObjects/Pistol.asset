@@ -22,3 +22,12 @@ MonoBehaviour:
     type: 3}
   inaccuracy: 0
   reloadTime: 1
+  fire: {fileID: 8300000, guid: fad1cef9ecf21724eb755418fb97ec2e, type: 3}
+  firePitchMin: 0.75
+  firePitchMax: 1.25
+  fireVolume: 0.7
+  reload: {fileID: 0}
+  empty: {fileID: 8300000, guid: e1840d4461419c74791e3148ad79129a, type: 3}
+  emptyPitchMin: 0.75
+  emptyPitchMax: 1.25
+  emptyVolume: 0.7

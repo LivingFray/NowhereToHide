@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Gun : MonoBehaviour {
 
@@ -8,6 +7,8 @@ public class Gun : MonoBehaviour {
     public GameObject projectileOrigin;
 
     public ParticleSystem muzzle;
+
+    AudioSource audioSource;
 
     //[HideInInspector]
     public Entity owner;
@@ -28,6 +29,7 @@ public class Gun : MonoBehaviour {
         lastFired = 0;
         reloading = 0.0f;
         projTransform = projectileOrigin.transform;
+        audioSource = GetComponent<AudioSource>();
 	}
 
     //Try to shoot after we know if the trigger is down
@@ -41,7 +43,7 @@ public class Gun : MonoBehaviour {
             reloading -= Time.deltaTime;
             if(reloading <= 0.0f) {
                 reloading = 0.0f;
-                ammo = Math.Min(clip, gunProperties.maxAmmo);
+                ammo = System.Math.Min(clip, gunProperties.maxAmmo);
                 clip -= ammo;
                 Debug.Log(ammo + "/" + clip);
             }
@@ -68,21 +70,27 @@ public class Gun : MonoBehaviour {
     }
 
     void Fire() {
-        if(reloading > 0.0f) {
+        //Checks that gun can be shot
+        if(reloading > 0.0f || ammo == 0) {
+            audioSource.pitch = Random.Range(gunProperties.emptyPitchMin, gunProperties.emptyPitchMax);
+            audioSource.PlayOneShot(gunProperties.empty, gunProperties.emptyVolume);
             return;
         }
-        if(ammo == 0) {
-            return;
-        }
+        //Create projectile
         GameObject proj = Instantiate(gunProperties.projectile, projTransform.position + projTransform.forward * 0.5f, projTransform.rotation);
         Projectile projectile = proj.GetComponent<Projectile>();
         projectile.damage = gunProperties.damage;
         projectile.owner = owner;
         projectile.startPos = muzzle.transform.position;
+        //Expend ammo
         ammo--;
-        muzzle.Play();
         Debug.Log(ammo + "/" + clip);
-        if(ammo == 0 && clip > 0) {
+        //Pretty effects here
+        muzzle.Play();
+        audioSource.pitch = Random.Range(gunProperties.firePitchMin, gunProperties.firePitchMax);
+        audioSource.PlayOneShot(gunProperties.fire, gunProperties.fireVolume);
+        //Auto-reload
+        if (ammo == 0 && clip > 0) {
             reloading = gunProperties.reloadTime;
         }
     }
