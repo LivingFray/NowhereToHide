@@ -41,12 +41,8 @@ public class PlayerController : EntityController {
             entity.lookAngle.y += 360.0f;
         }
 
-        if (xRot != 0.0f) {
-            entity.head.transform.localRotation = Quaternion.Euler(new Vector3(entity.lookAngle.x, 0.0f, 0.0f));
-        }
-        if (yRot != 0.0f) {
-            entity.rigidbody.MoveRotation(Quaternion.Euler(new Vector3(0.0f, entity.lookAngle.y, 0.0f)));
-        }
+        entity.head.transform.localRotation = Quaternion.Euler(new Vector3(entity.lookAngle.x, 0.0f, 0.0f));
+        entity.rigidbody.MoveRotation(Quaternion.Euler(new Vector3(0.0f, entity.lookAngle.y, 0.0f)));
     }
 
     void MovePlayer(Entity entity) {

@@ -93,6 +93,8 @@ public class Gun : MonoBehaviour {
         muzzle.Play();
         audioSource.pitch = Random.Range(gunProperties.firePitchMin, gunProperties.firePitchMax);
         audioSource.PlayOneShot(gunProperties.fire, gunProperties.fireVolume);
+        //Recoil
+        owner.ApplyRecoil(gunProperties.recoil);
         //Auto-reload
         if (Ammo == 0 && Clip > 0) {
             reloading = gunProperties.reloadTime;

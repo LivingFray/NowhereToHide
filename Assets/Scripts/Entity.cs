@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,4 +60,8 @@ public class Entity : MonoBehaviour {
 
     //Called when entity successfully shoots a target
     public virtual void OnHit() { }
+
+    public void ApplyRecoil(float recoil) {
+        lookAngle.x -= recoil;
+    }
 }
