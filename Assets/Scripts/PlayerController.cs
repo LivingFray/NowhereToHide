@@ -7,6 +7,8 @@ public class PlayerController : EntityController {
 
     public float lookSensitivity;
 
+    public float jumpForce;
+
     public override void OnUpdate(Entity entity) {
         entity.equippedGun.triggerHeld = Input.GetButton("Fire1");
     }
@@ -52,6 +54,12 @@ public class PlayerController : EntityController {
 
         Vector3 pos = entity.transform.forward * y + entity.transform.right * x;
         pos = pos.normalized * speed;
+
+
+
+        if(entity.canJump && Input.GetButtonDown("Jump")) {
+            entity.rigidbody.AddForce(entity.transform.up * jumpForce, ForceMode.VelocityChange);
+        }
 
         if (pos != Vector3.zero) {
             entity.rigidbody.MovePosition(entity.rigidbody.position + pos * Time.fixedDeltaTime);

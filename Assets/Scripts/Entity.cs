@@ -14,14 +14,21 @@ public class Entity : MonoBehaviour {
     [HideInInspector]
     new public Rigidbody rigidbody;
 
+    [HideInInspector]
+    new public CapsuleCollider collider;
+
     public Vector3 lookAngle;
 
     public Gun equippedGun;
+
+    [HideInInspector]
+    public bool canJump;
 
 	// Use this for initialization
 	void Start () {
         Health = 100;
         rigidbody = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
         OnStart();
 	}
 
@@ -29,6 +36,7 @@ public class Entity : MonoBehaviour {
     protected virtual void OnUpdate() { }
 
     void Update () {
+        canJump = Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x, collider.bounds.min.y - 0.1f, collider.bounds.center.z), collider.radius/2.0f, 1 << LayerMask.NameToLayer("LevelGeometry"));
         entityController.OnUpdate(this);
         OnUpdate();
 	}

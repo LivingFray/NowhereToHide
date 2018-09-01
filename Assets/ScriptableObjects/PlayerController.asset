@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerController
   m_EditorClassIdentifier: 
   speed: 10
-  lookRotation: {x: 0, y: 0, z: 0, w: 0}
   lookSensitivity: 3
+  jumpForce: 10
