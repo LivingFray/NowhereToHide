@@ -9,6 +9,9 @@ public class Gun : MonoBehaviour {
 
     public ParticleSystem muzzle;
 
+    //[HideInInspector]
+    public Entity owner;
+
     Transform projTransform;
 
     int ammo;
@@ -74,7 +77,7 @@ public class Gun : MonoBehaviour {
         GameObject proj = Instantiate(gunProperties.projectile, projTransform.position + projTransform.forward * 0.5f, projTransform.rotation);
         Projectile projectile = proj.GetComponent<Projectile>();
         projectile.damage = gunProperties.damage;
-        projectile.owner = gameObject;
+        projectile.owner = owner;
         projectile.startPos = muzzle.transform.position;
         ammo--;
         muzzle.Play();

@@ -6,14 +6,17 @@ public class Projectile : MonoBehaviour {
 
     public int damage;
 
-    public GameObject owner;
+    public Entity owner;
 
     public Vector3 startPos;
 
     protected void OnHit(GameObject target) {
         Entity entity = target.GetComponent<Entity>();
         if(entity != null) {
-            entity.Damage(damage);
+            owner.OnHit();
+            if(entity.Damage(damage)) {
+                //Update scores
+            }
         }
     }
 }

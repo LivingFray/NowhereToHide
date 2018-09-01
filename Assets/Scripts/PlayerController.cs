@@ -9,6 +9,8 @@ public class PlayerController : EntityController {
 
     public float jumpForce;
 
+    public GameObject crosshair; 
+
     public override void OnUpdate(Entity entity) {
         entity.equippedGun.triggerHeld = Input.GetButton("Fire1");
     }
