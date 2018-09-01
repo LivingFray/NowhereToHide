@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Gun : MonoBehaviour {
 
     public GunScriptable gunProperties;
+
+    public GameObject projectileOrigin;
+    Transform projTransform;
 
     int ammo;
     int clip;
@@ -12,15 +14,32 @@ public class Gun : MonoBehaviour {
 
     public bool triggerHeld;
 
+    float reloading;
+
     void Start () {
         ammo = gunProperties.maxAmmo;
         clip = gunProperties.maxClip;
         lastFired = 0;
+        reloading = 0.0f;
+        projTransform = projectileOrigin.transform;
 	}
 
     //Try to shoot after we know if the trigger is down
     void LateUpdate() {
+        AttemptReload();
         CheckFire();
+    }
+
+    void AttemptReload() {
+        if(reloading > 0.0f) {
+            reloading -= Time.deltaTime;
+            if(reloading <= 0.0f) {
+                reloading = 0.0f;
+                ammo = Math.Min(clip, gunProperties.maxAmmo);
+                clip -= ammo;
+                Debug.Log(ammo + "/" + clip);
+            }
+        }
     }
 
     void CheckFire() {
@@ -43,6 +62,20 @@ public class Gun : MonoBehaviour {
     }
 
     void Fire() {
-        Debug.Log("Pew");
+        if(reloading > 0.0f) {
+            return;
+        }
+        if(ammo == 0) {
+            return;
+        }
+        GameObject proj = Instantiate(gunProperties.projectile, projTransform.position + projTransform.forward * 0.5f, projTransform.rotation);
+        Projectile projectile = proj.GetComponent<Projectile>();
+        projectile.damage = gunProperties.damage;
+        projectile.owner = gameObject;
+        ammo--;
+        Debug.Log(ammo + "/" + clip);
+        if(ammo == 0 && clip > 0) {
+            reloading = gunProperties.reloadTime;
+        }
     }
 }

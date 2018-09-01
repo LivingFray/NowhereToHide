@@ -16,7 +16,9 @@ MonoBehaviour:
   recoil: 0.1
   maxAmmo: 30
   maxClip: 60
-  auto: 0
+  auto: 1
   fireRate: 0.1
-  projectile: {fileID: 0}
+  projectile: {fileID: 7659489850741109393, guid: 916a666efb01faf4498807165edf3203,
+    type: 3}
   inaccuracy: 0
+  reloadTime: 1

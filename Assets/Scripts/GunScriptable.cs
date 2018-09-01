@@ -20,4 +20,6 @@ public class GunScriptable : ScriptableObject {
     public GameObject projectile;
     //The maximum angle a projectile may deviate by
     public float inaccuracy;
+    //The time it takes to reload the gun
+    public float reloadTime;
 }
