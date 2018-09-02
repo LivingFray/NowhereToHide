@@ -11,6 +11,8 @@ public class Entity : MonoBehaviour {
 
     public EntityController entityController;
 
+    public GameObject xray;
+
     public GameObject head;
 
     [HideInInspector]
@@ -45,6 +47,8 @@ public class Entity : MonoBehaviour {
     public float respawnTime;
     [HideInInspector]
     public Vector3 velocity;
+    [HideInInspector]
+    public bool isXRaying;
 
     public int kills;
     public int deaths;
@@ -89,6 +93,7 @@ public class Entity : MonoBehaviour {
         canJump = Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x, collider.bounds.min.y - 0.1f, collider.bounds.center.z), collider.radius / 2.0f, 1 << LayerMask.NameToLayer("LevelGeometry"));
         entityController.OnUpdate(this);
         OnUpdate();
+        xray.SetActive(isXRaying);
     }
 
     void FixedUpdate() {

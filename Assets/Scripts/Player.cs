@@ -12,6 +12,7 @@ public class Player : Entity {
 
     public GameObject specCamera;
     public GameObject playerCamera;
+    public GameObject xrayCamera;
 
     // Use this for initialization
     protected override void OnStart () {
@@ -44,8 +45,12 @@ public class Player : Entity {
         if (hurt.color.a > 0.0f) {
             hurt.color = new Color(hurt.color.r, hurt.color.g, hurt.color.b, hurt.color.a - Time.deltaTime);
         }
+        //UI
         ammo.text = equippedGun.Ammo + "/" + equippedGun.Clip;
         health.text = Health.ToString();
+        //Xray camera
+        isXRaying = Health > 0 && Input.GetButton("Fire2");
+        xrayCamera.SetActive(isXRaying);
     }
 
     public override void OnHit() {

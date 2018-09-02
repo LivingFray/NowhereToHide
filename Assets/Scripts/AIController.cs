@@ -107,6 +107,10 @@ public class AIController : EntityController {
     }
 
     bool EntityVisible(Entity from, Entity to) {
+        //XRaying players are visible to all and players xraying can obviously see everyone
+        if(from.isXRaying || to.isXRaying) {
+            return true;
+        }
         //Gonna have to settle with raycasts from eye to eye, even though this won't be quite true
         Vector3 offset = to.gameObject.transform.position - from.gameObject.transform.position;
         return !Physics.Raycast(from.gameObject.transform.position, offset, offset.magnitude, (1 << LayerMask.NameToLayer("LevelGeometry")));

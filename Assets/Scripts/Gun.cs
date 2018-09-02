@@ -74,6 +74,9 @@ public class Gun : MonoBehaviour {
     }
 
     void Fire() {
+        if(owner.isXRaying) {
+            return;
+        }
         //Checks that gun can be shot
         if(reloading > 0.0f || Ammo == 0) {
             audioSource.pitch = Random.Range(gunProperties.emptyPitchMin, gunProperties.emptyPitchMax);
