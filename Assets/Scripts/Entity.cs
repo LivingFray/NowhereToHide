@@ -110,7 +110,7 @@ public class Entity : MonoBehaviour {
     protected virtual void OnUpdate() { }
 
     void Update() {
-        canJump = Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x, collider.bounds.min.y - 0.1f, collider.bounds.center.z), collider.radius / 2.0f, 1 << LayerMask.NameToLayer("LevelGeometry"));
+        canJump = Physics.CheckCapsule(collider.bounds.center, new Vector3(collider.bounds.center.x, collider.bounds.min.y - 0.3f, collider.bounds.center.z), collider.radius / 2.0f, 1 << LayerMask.NameToLayer("LevelGeometry"));
         entityController.OnUpdate(this);
         OnUpdate();
         xray.SetActive(isXRaying);
