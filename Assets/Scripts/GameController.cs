@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     [HideInInspector]
@@ -8,7 +9,11 @@ public class GameController : MonoBehaviour {
 
     public GameObject[] spawnLocations;
 
+    public GameObject[] ammo;
+
     public GameObject ai;
+
+    public Text scores;
 
     public int numPlayers;
 
@@ -25,9 +30,11 @@ public class GameController : MonoBehaviour {
             //Add the player
             GameObject.FindGameObjectWithTag("Player").GetComponent<Entity>()
         };
+        entities[0].name = "Player";
         //Add AIs
-        for(int i = 0; i < numPlayers - 1; i++) {
+        for(int i = 1; i < numPlayers; i++) {
             entities.Add(Instantiate(ai).GetComponent<Entity>());
+            entities[i].name = "Bot " + i;
         }
         foreach(Entity ent in entities) {
             RespawnEntity(ent);
@@ -50,7 +57,13 @@ public class GameController : MonoBehaviour {
     }
 
     private void Update() {
+        string sb = "Name\t\tKills\t\tDeaths";
         foreach(Entity ent in entities) {
+            sb += "\n" + ent.name;
+            for(int i = 0; i < 3 - (ent.name.Length / 4); i++) {
+                sb += "\t";
+            }
+            sb += ent.kills + "\t\t\t" + ent.deaths;
             if(ent.respawnTime > 0.0f) {
                 ent.respawnTime -= Time.deltaTime;
                 if(ent.respawnTime <= 0.0f) {
@@ -58,5 +71,6 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
+        scores.text = sb;
     }
 }

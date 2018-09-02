@@ -28,3 +28,6 @@ MonoBehaviour:
   maxFireDelay: 1
   maxGuessTime: 2
   moveCloserChance: 70
+  xrayChance: 50
+  minXrayTime: 1
+  maxXrayTime: 3

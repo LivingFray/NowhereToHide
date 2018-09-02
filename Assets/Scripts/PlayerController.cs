@@ -42,7 +42,7 @@ public class PlayerController : EntityController {
 
         if (pos != Vector3.zero) {
             entity.rigidbody.MovePosition(entity.rigidbody.position + pos * Time.fixedDeltaTime);
-            entity.velocity = pos;
         }
+        entity.velocity = pos; //TODO: Average over frames?
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -49,6 +46,10 @@ public class Entity : MonoBehaviour {
     public Vector3 velocity;
     [HideInInspector]
     public bool isXRaying;
+    [HideInInspector]
+    public float xrayTime;
+    [HideInInspector]
+    public bool findingAmmo;
 
     public int kills;
     public int deaths;
@@ -60,6 +61,10 @@ public class Entity : MonoBehaviour {
     new public Rigidbody rigidbody;
     [HideInInspector]
     new public CapsuleCollider collider;
+
+    public TextMesh debug;
+
+    public string name;
 
     private void Awake() {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
@@ -73,6 +78,10 @@ public class Entity : MonoBehaviour {
         OnStart();
     }
 
+    public void SetStatus(string status) {
+        debug.text = status;
+    }
+
     public virtual void OnRespawn() {
         idleTimer = 0.0f;
         Health = 100;
@@ -83,6 +92,9 @@ public class Entity : MonoBehaviour {
         hasShot = false;
         guessingTime = 0.0f;
         respawnTime = 0.0f;
+        isXRaying = false;
+        xrayTime = 0.0f;
+        equippedGun.Respawn();
         entityController.OnRespawn(this);
     }
 

@@ -35,6 +35,12 @@ public class AIController : EntityController {
 
     public float moveCloserChance;
 
+    public float xrayChance;
+
+    public float minXrayTime;
+
+    public float maxXrayTime;
+
     public override void OnDied(Entity entity) {
         base.OnDied(entity);
         entity.navMeshAgent.ResetPath();
@@ -56,31 +62,63 @@ public class AIController : EntityController {
     }
 
     void HandleAI(Entity entity) {
+        //Handle dead targets
+        if (entity.currentTarget != null && entity.currentTarget.Health <= 0) {
+            entity.currentTarget = null;
+        }
+        //Handle xraying first
+        if (entity.xrayTime > 0.0f) {
+            entity.xrayTime -= Time.deltaTime;
+            if(entity.xrayTime < 0.0f) {
+                entity.xrayTime = 0.0f;
+                entity.isXRaying = false;
+            }
+            return;
+        }
+        if(entity.equippedGun.Clip == 0 && !entity.findingAmmo) {
+            FindAmmo(entity);
+            return;
+        }
+        //AI decision tree
         if (entity.currentTarget == null) { //No Target
-            Debug.Log("AI: Searching for new target");
+            entity.SetStatus("AI: Searching for new target");
             FindTarget(entity);
             if (entity.currentTarget == null) { //No new targets
-                Debug.Log("AI: Wandering");
                 Wander(entity);
             } else { //Tracking new target
-                Debug.Log("AI: Target found");
+                entity.SetStatus("AI: Target found");
                 //TODO: Move to target
                 entity.idleTimer = Random.Range(minTargetTime, maxTargetTime);
                 entity.fireDelay = Random.Range(minFireDelay, maxFireDelay);
             }
         } else { //Continue tracking
-            Debug.Log("AI: Tracking Target");
+            entity.SetStatus("AI: Tracking Target");
             AimAtTarget(entity);
-            //Temp?
             Wander(entity);
         }
+    }
+
+    private void FindAmmo(Entity entity) {
+        float d = Mathf.Infinity;
+        Vector3 closest = entity.transform.position;
+        foreach(GameObject ammo in entity.gameController.ammo) {
+            float sqr = (ammo.transform.position - entity.transform.position).sqrMagnitude;
+            if(sqr < d) {
+                d = sqr;
+                closest = ammo.transform.position;
+            }
+        }
+        entity.navMeshAgent.SetDestination(closest);
+        entity.currentGoal = closest;
+        entity.findingAmmo = true;
+        entity.wandering = true;
     }
 
     void FindTarget(Entity entity) {
         //Loop through and find all visible entities
         List<Entity> possibleTargets = new List<Entity>();
         foreach (Entity ent in entity.gameController.entities) {
-            if (ent.Health > 0 && EntityVisible(entity, ent)) {
+            if (ent != entity && ent.Health > 0 && EntityVisible(entity, ent)) {
                 possibleTargets.Add(ent);
             }
         }
@@ -119,6 +157,15 @@ public class AIController : EntityController {
     void Wander(Entity entity) {
         //If reached current goal position, go somewhere else
         if (!entity.wandering || (entity.wandering && (entity.transform.position - entity.currentGoal).sqrMagnitude < goalDistanceFudge)) {
+            if (entity.wandering) {
+                entity.findingAmmo = false;
+            }
+            if (Random.Range(0, 100) < xrayChance) {
+                entity.SetStatus("AI: XRaying");
+                XRay(entity);
+            } else {
+                entity.SetStatus("AI: Wandering");
+            }
             CreateWanderGoal(entity);
             entity.wandering = true;
         }
@@ -143,7 +190,7 @@ public class AIController : EntityController {
 
         Vector3 centre;
 
-        if(entity.currentTarget != null && Random.Range(0, 100) < moveCloserChance) {
+        if(entity.currentTarget != null && (entity.isXRaying || Random.Range(0, 100) < moveCloserChance)) {
             centre = entity.currentTarget.transform.position;
         } else {
             centre = entity.transform.position;
@@ -225,7 +272,7 @@ public class AIController : EntityController {
         Vector3 guess = entity.lastSeen + entity.lastMoving * entity.guessingTime;
         if(entity.guessingTime > maxGuessTime) {
             entity.currentTarget = null;
-            Debug.Log("AI: Lost sight of target");
+            entity.SetStatus("AI: Lost sight of target");
         }
         return LookAtTarget(entity, guess);
     }
@@ -237,5 +284,10 @@ public class AIController : EntityController {
             entity.equippedGun.triggerHeld = true;
             entity.hasShot = true;
         }
+    }
+
+    void XRay(Entity entity) {
+        entity.isXRaying = true;
+        entity.xrayTime = Random.Range(minXrayTime, maxXrayTime);
     }
 }

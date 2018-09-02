@@ -41,6 +41,22 @@ public class Gun : MonoBehaviour {
         CheckFire();
     }
 
+    public void Respawn() {
+        Ammo = gunProperties.maxAmmo;
+        Clip = gunProperties.maxClip;
+    }
+
+    public bool PickupAmmo(int count) {
+        if(Clip == gunProperties.maxClip) {
+            return false;
+        }
+        Clip += count;
+        if(Clip > gunProperties.maxClip) {
+            Clip = gunProperties.maxClip;
+        }
+        return true;
+    }
+
     void AttemptReload() {
         if(reloading > 0.0f) {
             reloading -= Time.deltaTime;
