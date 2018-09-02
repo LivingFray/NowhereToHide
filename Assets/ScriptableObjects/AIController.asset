@@ -26,3 +26,4 @@ MonoBehaviour:
   continuedAccuracy: 0.2
   minFireDelay: 0.2
   maxFireDelay: 1
+  maxGuessTime: 2

@@ -31,6 +31,8 @@ public class AIController : EntityController {
 
     public float maxFireDelay;
 
+    public float maxGuessTime;
+
     public override void OnDied(Entity entity) {
         entity.gameObject.SetActive(false);
     }
@@ -38,6 +40,8 @@ public class AIController : EntityController {
     public override void OnUpdate(Entity entity) {
         //Use a decision tree to determine current action
         HandleAI(entity);
+        //Update velocity
+        entity.velocity = entity.navMeshAgent.velocity;
     }
 
     void HandleAI(Entity entity) {
@@ -91,8 +95,8 @@ public class AIController : EntityController {
 
     bool EntityVisible(Entity from, Entity to) {
         //Gonna have to settle with raycasts from eye to eye, even though this won't be quite true
-        //TODO: Maybe ai not see entities behind?
-        return Physics.Raycast(from.gameObject.transform.position, to.gameObject.transform.position - from.gameObject.transform.position, 400.0f, ~(1 << LayerMask.NameToLayer("GeometryLayer")));
+        Vector3 offset = to.gameObject.transform.position - from.gameObject.transform.position;
+        return !Physics.Raycast(from.gameObject.transform.position, offset, offset.magnitude, (1 << LayerMask.NameToLayer("LevelGeometry")));
     }
 
     void Wander(Entity entity) {
@@ -137,7 +141,36 @@ public class AIController : EntityController {
         if (entity.equippedGun.Ammo == 0) {
             entity.idleTimer = entity.equippedGun.gunProperties.reloadTime + Random.Range(minTargetTime, maxTargetTime);
         }
-        Vector3 diff = entity.currentTarget.transform.position - entity.transform.position;
+
+        float dist = 0;
+
+        //Check target is visible
+        if(EntityVisible(entity, entity.currentTarget)) {
+            dist = LookAtTarget(entity);
+            entity.guessingTime = 0.0f;
+            entity.lastSeen = entity.currentTarget.transform.position;
+            entity.lastMoving = entity.currentTarget.velocity;
+        } else {
+            entity.guessingTime += Time.deltaTime;
+            dist = GuessTarget(entity);
+        }
+       
+        //Shoot periodically
+        entity.idleTimer -= Time.deltaTime;
+        float threshold = entity.hasShot ? continuedAccuracy : accuracy;
+        if (entity.idleTimer <= 0.0f) {
+            if (dist < threshold * threshold) {
+                ShootAtTarget(entity);
+            } else {
+                entity.fireDelay = Random.Range(minFireDelay, maxFireDelay);
+                entity.hasShot = false;
+            }
+        }
+    }
+
+    float LookAtTarget(Entity entity, Vector3 target) {
+        //Rotate camera
+        Vector3 diff = target - entity.transform.position;
 
         diff = diff.normalized;
 
@@ -156,17 +189,20 @@ public class AIController : EntityController {
         entity.lookAngle = new Vector3(dX, dY, 0.0f);
         UpdateRotation(entity);
 
-        entity.idleTimer -= Time.deltaTime;
-        float threshold = entity.hasShot ? continuedAccuracy : accuracy;
-        if (entity.idleTimer <= 0.0f) {
-            if (dist < threshold * threshold) {
-                ShootAtTarget(entity);
-            } else {
-                Debug.Log("Lost sight");
-                entity.fireDelay = Random.Range(minFireDelay, maxFireDelay);
-                entity.hasShot = false;
-            }
+        return dist;
+    }
+
+    float LookAtTarget(Entity entity) {
+        return LookAtTarget(entity, entity.currentTarget.transform.position);
+    }
+
+    float GuessTarget(Entity entity) {
+        Vector3 guess = entity.lastSeen + entity.lastMoving * entity.guessingTime;
+        if(entity.guessingTime > maxGuessTime) {
+            entity.currentTarget = null;
+            Debug.Log("AI: Lost sight of target");
         }
+        return LookAtTarget(entity, guess);
     }
 
     void ShootAtTarget(Entity entity) {

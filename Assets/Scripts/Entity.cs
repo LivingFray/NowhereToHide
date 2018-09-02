@@ -19,6 +19,9 @@ public class Entity : MonoBehaviour {
     [HideInInspector]
     new public CapsuleCollider collider;
 
+    [HideInInspector]
+    public Vector3 velocity;
+
     public Vector3 lookAngle;
 
     public Gun equippedGun;
@@ -29,8 +32,6 @@ public class Entity : MonoBehaviour {
     [HideInInspector]
     public Entity currentTarget;
     [HideInInspector]
-    public float targettingTime;
-    [HideInInspector]
     public Vector3 currentGoal;
     [HideInInspector]
     public bool wandering;
@@ -40,6 +41,12 @@ public class Entity : MonoBehaviour {
     public float fireDelay;
     [HideInInspector]
     public bool hasShot;
+    [HideInInspector]
+    public Vector3 lastSeen;
+    [HideInInspector]
+    public Vector3 lastMoving;
+    [HideInInspector]
+    public float guessingTime;
 
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
@@ -57,7 +64,6 @@ public class Entity : MonoBehaviour {
         collider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         currentGoal = transform.position;
-        targettingTime = 0.0f;
         idleTimer = 0.0f;
         OnStart();
     }

@@ -7,6 +7,7 @@ public class Player : Entity {
     public GameObject crosshair;
     RectTransform crossTrans;
     public Text ammo;
+    public Text health;
     public Image hurt;
 
     // Use this for initialization
@@ -41,6 +42,7 @@ public class Player : Entity {
             hurt.color = new Color(hurt.color.r, hurt.color.g, hurt.color.b, hurt.color.a - Time.deltaTime);
         }
         ammo.text = equippedGun.Ammo + "/" + equippedGun.Clip;
+        health.text = Health.ToString();
     }
 
     public override void OnHit() {
