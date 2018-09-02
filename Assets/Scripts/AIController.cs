@@ -25,6 +25,12 @@ public class AIController : EntityController {
 
     public float accuracy;
 
+    public float continuedAccuracy;
+
+    public float minFireDelay;
+
+    public float maxFireDelay;
+
     public override void OnDied(Entity entity) {
         entity.gameObject.SetActive(false);
     }
@@ -45,6 +51,7 @@ public class AIController : EntityController {
                 Debug.Log("AI: Target found");
                 //TODO: Move to target
                 entity.idleTimer = Random.Range(minTargetTime, maxTargetTime);
+                entity.fireDelay = Random.Range(minFireDelay, maxFireDelay);
             }
         } else { //Continue tracking
             Debug.Log("AI: Tracking Target");
@@ -150,15 +157,24 @@ public class AIController : EntityController {
         UpdateRotation(entity);
 
         entity.idleTimer -= Time.deltaTime;
-
-        if (entity.idleTimer <= 0.0f && dist < accuracy * accuracy) {
-            ShootAtTarget(entity);
-            Debug.Log(dist);
+        float threshold = entity.hasShot ? continuedAccuracy : accuracy;
+        if (entity.idleTimer <= 0.0f) {
+            if (dist < threshold * threshold) {
+                ShootAtTarget(entity);
+            } else {
+                Debug.Log("Lost sight");
+                entity.fireDelay = Random.Range(minFireDelay, maxFireDelay);
+                entity.hasShot = false;
+            }
         }
     }
 
     void ShootAtTarget(Entity entity) {
-        entity.equippedGun.triggerHeld = true;
-        //TODO: Stop firing, fire rate based on gun properties
+        entity.fireDelay -= Time.deltaTime;
+        //First shot must have a delay to aim
+        if (entity.fireDelay <= 0) {
+            entity.equippedGun.triggerHeld = true;
+            entity.hasShot = true;
+        }
     }
 }

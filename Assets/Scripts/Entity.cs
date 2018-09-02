@@ -36,6 +36,10 @@ public class Entity : MonoBehaviour {
     public bool wandering;
     [HideInInspector]
     public float idleTimer;
+    [HideInInspector]
+    public float fireDelay;
+    [HideInInspector]
+    public bool hasShot;
 
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
