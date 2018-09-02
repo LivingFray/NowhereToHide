@@ -124,11 +124,11 @@ public class AIController : EntityController {
         //Release trigger for non automatic
         if (entity.equippedGun.triggerHeld && !entity.equippedGun.gunProperties.auto) {
             entity.equippedGun.triggerHeld = false;
-            if (entity.equippedGun.Ammo == 0) {
-                entity.idleTimer = entity.equippedGun.gunProperties.reloadTime;
-            } else {
-                entity.idleTimer = entity.equippedGun.gunProperties.fireRate;
-            }
+            entity.idleTimer = entity.equippedGun.gunProperties.fireRate;
+        }
+        //Release trigger for empty guns
+        if (entity.equippedGun.Ammo == 0) {
+            entity.idleTimer = entity.equippedGun.gunProperties.reloadTime + Random.Range(minTargetTime, maxTargetTime);
         }
         Vector3 diff = entity.currentTarget.transform.position - entity.transform.position;
 
@@ -136,7 +136,7 @@ public class AIController : EntityController {
 
         Vector3 lookDir = Quaternion.Euler(entity.lookAngle) * new Vector3(0.0f, 0.0f, 1.0f);
 
-        Vector3 change = Vector3.RotateTowards(lookDir, diff, maxTurnSpeed * Time.deltaTime, 0.0f);
+        Vector3 change = Vector3.RotateTowards(lookDir, diff, Mathf.Deg2Rad * maxTurnSpeed * Time.deltaTime, 0.0f);
 
         float horDist = change.z * change.z + change.x * change.x;
         horDist = Mathf.Sqrt(horDist);

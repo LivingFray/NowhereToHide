@@ -13,6 +13,12 @@ public class GameController : MonoBehaviour {
     public int numPlayers;
 
     void Start() {
+        //Prevent players colliding
+        int lp = LayerMask.NameToLayer("LocalPlayer");
+        int ep = LayerMask.NameToLayer("Enemy");
+        Physics.IgnoreLayerCollision(lp, ep);
+        Physics.IgnoreLayerCollision(ep, ep);
+        Physics.IgnoreLayerCollision(lp, lp);
         entities = new List<Entity> {
             //Add the player
             GameObject.FindGameObjectWithTag("Player").GetComponent<Entity>()

@@ -19,3 +19,7 @@ MonoBehaviour:
   wanderRange: 10
   mapSizeX: 100
   mapSizeZ: 100
+  maxTurnSpeed: 90
+  minTargetTime: 0.5
+  maxTargetTime: 2
+  accuracy: 0.1
