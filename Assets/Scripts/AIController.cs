@@ -33,6 +33,8 @@ public class AIController : EntityController {
 
     public float maxGuessTime;
 
+    public float moveCloserChance;
+
     public override void OnDied(Entity entity) {
         entity.gameObject.SetActive(false);
     }
@@ -126,8 +128,16 @@ public class AIController : EntityController {
 
         Vector3 target = new Vector3(randMove.x, 0.0f, randMove.y);
 
+        Vector3 centre;
+
+        if(entity.currentTarget != null && Random.Range(0, 100) < moveCloserChance) {
+            centre = entity.currentTarget.transform.position;
+        } else {
+            centre = entity.transform.position;
+        }
+
         NavMeshHit hit;
-        NavMesh.SamplePosition(target + entity.transform.position, out hit, wanderRange, -1);
+        NavMesh.SamplePosition(target + centre, out hit, wanderRange, -1);
 
         entity.currentGoal = hit.position;
         entity.navMeshAgent.SetDestination(hit.position);
