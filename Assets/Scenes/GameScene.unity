@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7737652
 Transform:
@@ -90,6 +90,53 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &12888992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 12888994}
+  - component: {fileID: 12888993}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &12888994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12888992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &12888993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12888992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a76025c8b01df34083462dd4d9c2adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entities: []
+  spawnLocations: []
+  ai: {fileID: 0}
+  numPlayers: 0
 --- !u!1 &92165538
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +154,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &92165539
 Transform:
@@ -445,7 +492,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &305349216
 Transform:
@@ -659,7 +706,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &554949704
 Transform:
@@ -836,7 +883,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &702496601
 Transform:
@@ -866,7 +913,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &706166273
 Transform:
@@ -903,7 +950,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &737246389
 Transform:
@@ -993,7 +1040,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &777250385
 Transform:
@@ -1083,7 +1130,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &780611871
 Transform:
@@ -1256,6 +1303,13 @@ MonoBehaviour:
   lookAngle: {x: 0, y: 0, z: 0}
   equippedGun: {fileID: 679086967}
   canJump: 0
+  currentTarget: {fileID: 0}
+  targettingTime: 0
+  currentGoal: {x: 0, y: 0, z: 0}
+  wandering: 0
+  idleTimer: 0
+  navMeshAgent: {fileID: 0}
+  gameController: {fileID: 0}
   crosshair: {fileID: 457318737}
   ammo: {fileID: 1019356982}
 --- !u!136 &839161646
@@ -1415,7 +1469,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1140265792
 Transform:
@@ -1592,7 +1646,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1180575913
 Transform:
@@ -1625,7 +1679,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1211677039
 Transform:
@@ -1715,7 +1769,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1216486114
 Transform:
@@ -1807,7 +1861,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1313944139
 Transform:
@@ -1927,7 +1981,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1457347706
 Transform:
@@ -1988,6 +2042,7 @@ GameObject:
   - component: {fileID: 1498828504}
   - component: {fileID: 1498828508}
   - component: {fileID: 1498828503}
+  - component: {fileID: 1498828509}
   m_Layer: 0
   m_Name: AI
   m_TagString: Untagged
@@ -2103,6 +2158,35 @@ MonoBehaviour:
   lookAngle: {x: 0, y: 0, z: 0}
   equippedGun: {fileID: 1619024418}
   canJump: 0
+  currentTarget: {fileID: 0}
+  targettingTime: 0
+  currentGoal: {x: 0, y: 0, z: 0}
+  wandering: 0
+  idleTimer: 0
+  navMeshAgent: {fileID: 0}
+  gameController: {fileID: 0}
+--- !u!195 &1498828509
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498828502}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1618734978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,7 +2280,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1808801100
 Transform:
@@ -2431,8 +2515,8 @@ NavMeshSettings:
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
-    ledgeDropHeight: 0
-    maxJumpAcrossDistance: 0
+    ledgeDropHeight: 999
+    maxJumpAcrossDistance: 2
     minRegionArea: 2
     manualCellSize: 0
     cellSize: 0.16666667
@@ -2441,7 +2525,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 31e4c6a38fef5b048a5216e9e4b62ef1, type: 2}
 --- !u!1001 &185207809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2518,6 +2602,22 @@ PrefabInstance:
       propertyPath: owner
       value: 
       objectReference: {fileID: 1498828503}
+    - target: {fileID: 84149759252852155, guid: c41349f281ba13e448bbf02da95e5606,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754119853439692941, guid: c41349f281ba13e448bbf02da95e5606,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1158862027728575705, guid: c41349f281ba13e448bbf02da95e5606,
+        type: 3}
+      propertyPath: gunProperties
+      value: 
+      objectReference: {fileID: 11400000, guid: 96ebdb1b2052567488a1e3d5aed3efcc,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c41349f281ba13e448bbf02da95e5606, type: 3}
 --- !u!1001 &1170357142
@@ -2596,5 +2696,11 @@ PrefabInstance:
       propertyPath: owner
       value: 
       objectReference: {fileID: 839161651}
+    - target: {fileID: 1158862027728575705, guid: c41349f281ba13e448bbf02da95e5606,
+        type: 3}
+      propertyPath: gunProperties
+      value: 
+      objectReference: {fileID: 11400000, guid: 96ebdb1b2052567488a1e3d5aed3efcc,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c41349f281ba13e448bbf02da95e5606, type: 3}

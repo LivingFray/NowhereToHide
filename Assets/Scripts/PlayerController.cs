@@ -52,8 +52,6 @@ public class PlayerController : EntityController {
         Vector3 pos = entity.transform.forward * y + entity.transform.right * x;
         pos = pos.normalized * speed;
 
-
-
         if(entity.canJump && Input.GetButtonDown("Jump")) {
             entity.rigidbody.AddForce(entity.transform.up * jumpForce, ForceMode.VelocityChange);
         }

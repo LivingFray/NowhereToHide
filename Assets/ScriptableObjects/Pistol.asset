@@ -20,7 +20,7 @@ MonoBehaviour:
   fireRate: 0.15
   projectile: {fileID: 7659489850741109393, guid: 916a666efb01faf4498807165edf3203,
     type: 3}
-  inaccuracy: 0
+  inaccuracy: 1
   reloadTime: 1
   fire: {fileID: 8300000, guid: fad1cef9ecf21724eb755418fb97ec2e, type: 3}
   firePitchMin: 0.75

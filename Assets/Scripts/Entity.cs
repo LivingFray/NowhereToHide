@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Entity : MonoBehaviour {
@@ -22,14 +23,38 @@ public class Entity : MonoBehaviour {
 
     public Gun equippedGun;
 
+    //Useful information for controlling entities
     [HideInInspector]
     public bool canJump;
+    [HideInInspector]
+    public Entity currentTarget;
+    [HideInInspector]
+    public float targettingTime;
+    [HideInInspector]
+    public Vector3 currentGoal;
+    [HideInInspector]
+    public bool wandering;
+    [HideInInspector]
+    public float idleTimer;
 
-    // Use this for initialization
+    [HideInInspector]
+    public NavMeshAgent navMeshAgent;
+
+    [HideInInspector]
+    public GameController gameController;
+
+    private void Awake() {
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+    }
+
     void Start() {
         Health = 100;
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        currentGoal = transform.position;
+        targettingTime = 0.0f;
+        idleTimer = 0.0f;
         OnStart();
     }
 
