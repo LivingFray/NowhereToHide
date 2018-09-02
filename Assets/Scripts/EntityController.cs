@@ -9,8 +9,8 @@ public class EntityController : ScriptableObject {
     public virtual void OnUpdate(Entity entity) {}
     public virtual void OnFixedUpdate(Entity entity) {}
     public virtual void OnDied(Entity entity) {
-        entity.gameController.EntityDied(entity);
         entity.OnDied();
+        entity.gameController.EntityDied(entity);
     }
     public virtual void OnRespawn(Entity entity) {}
 

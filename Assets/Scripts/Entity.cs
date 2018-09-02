@@ -64,10 +64,15 @@ public class Entity : MonoBehaviour {
 
     public TextMesh debug;
 
-    public string name;
+    public ParticleSystem death;
+
+    public new string name;
 
     private void Awake() {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        if(gameController == null) {
+            Debug.LogError("No Controller");
+        }
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -96,6 +101,9 @@ public class Entity : MonoBehaviour {
         xrayTime = 0.0f;
         equippedGun.Respawn();
         entityController.OnRespawn(this);
+        if (gameController == null) {
+            Debug.LogError("No Controller");
+        }
     }
 
     protected virtual void OnStart() { }
@@ -117,7 +125,6 @@ public class Entity : MonoBehaviour {
         Health -= damage;
         if (Health <= 0) {
             Health = 0;
-            //TODO: Respawn
             entityController.OnDied(this);
             return true;
         }
@@ -128,7 +135,11 @@ public class Entity : MonoBehaviour {
     public virtual void OnHit() {}
 
     //Called when entity dies
-    public virtual void OnDied() {}
+    public virtual void OnDied() {
+        death.transform.parent = transform.parent;
+        death.transform.position = transform.position;
+        death.Play();
+    }
 
     public void ApplyRecoil(float recoil) {
         lookAngle.x -= recoil;
