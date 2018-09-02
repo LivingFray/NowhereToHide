@@ -60,6 +60,8 @@ public class AIController : EntityController {
         } else { //Continue tracking
             Debug.Log("AI: Tracking Target");
             AimAtTarget(entity);
+            //Temp?
+            Wander(entity);
         }
     }
 
