@@ -8,7 +8,11 @@ public class EntityController : ScriptableObject {
 
     public virtual void OnUpdate(Entity entity) {}
     public virtual void OnFixedUpdate(Entity entity) {}
-    public virtual void OnDied(Entity entity) {}
+    public virtual void OnDied(Entity entity) {
+        entity.gameController.EntityDied(entity);
+        entity.OnDied();
+    }
+    public virtual void OnRespawn(Entity entity) {}
 
     protected void UpdateRotation(Entity entity) {
         //Clamp angles

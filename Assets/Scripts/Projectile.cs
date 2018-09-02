@@ -15,7 +15,8 @@ public class Projectile : MonoBehaviour {
         if(entity != null) {
             owner.OnHit();
             if(entity.Damage(damage)) {
-                //Update scores
+                owner.kills++;
+                //TODO: Killfeed
             }
         }
     }

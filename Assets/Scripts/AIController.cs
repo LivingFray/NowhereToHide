@@ -36,14 +36,23 @@ public class AIController : EntityController {
     public float moveCloserChance;
 
     public override void OnDied(Entity entity) {
-        entity.gameObject.SetActive(false);
+        base.OnDied(entity);
+        entity.navMeshAgent.ResetPath();
+        entity.navMeshAgent.enabled = false;
     }
 
     public override void OnUpdate(Entity entity) {
-        //Use a decision tree to determine current action
-        HandleAI(entity);
-        //Update velocity
-        entity.velocity = entity.navMeshAgent.velocity;
+        if (entity.Health > 0) {
+            //Use a decision tree to determine current action
+            HandleAI(entity);
+            //Update velocity
+            entity.velocity = entity.navMeshAgent.velocity;
+        }
+    }
+
+    public override void OnRespawn(Entity entity) {
+        base.OnRespawn(entity);
+        entity.navMeshAgent.enabled = true;
     }
 
     void HandleAI(Entity entity) {
@@ -71,7 +80,7 @@ public class AIController : EntityController {
         //Loop through and find all visible entities
         List<Entity> possibleTargets = new List<Entity>();
         foreach (Entity ent in entity.gameController.entities) {
-            if (EntityVisible(entity, ent)) {
+            if (ent.Health > 0 && EntityVisible(entity, ent)) {
                 possibleTargets.Add(ent);
             }
         }

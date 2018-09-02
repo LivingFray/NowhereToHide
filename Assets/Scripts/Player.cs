@@ -10,6 +10,9 @@ public class Player : Entity {
     public Text health;
     public Image hurt;
 
+    public GameObject specCamera;
+    public GameObject playerCamera;
+
     // Use this for initialization
     protected override void OnStart () {
         mouseLocked = true;
@@ -49,8 +52,19 @@ public class Player : Entity {
         crossTrans.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 
+    public override void OnDied() {
+        playerCamera.SetActive(false);
+        specCamera.SetActive(true);
+    }
+
     public override bool Damage(int damage) {
         hurt.color = new Color(hurt.color.r, hurt.color.g, hurt.color.b, 0.25f);
         return base.Damage(damage);
+    }
+
+    public override void OnRespawn() {
+        base.OnRespawn();
+        playerCamera.SetActive(true);
+        specCamera.SetActive(false);
     }
 }

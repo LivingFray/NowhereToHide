@@ -19,10 +19,6 @@ public class PlayerController : EntityController {
         MoveCamera(entity);
     }
 
-    public override void OnDied(Entity entity) {
-        Debug.Log("DEADED");
-    }
-
     void MoveCamera(Entity entity) {
         //Look side to side
         float yRot = Input.GetAxisRaw("Mouse X");

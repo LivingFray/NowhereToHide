@@ -14,13 +14,7 @@ public class Entity : MonoBehaviour {
     public GameObject head;
 
     [HideInInspector]
-    new public Rigidbody rigidbody;
-
-    [HideInInspector]
-    new public CapsuleCollider collider;
-
-    [HideInInspector]
-    public Vector3 velocity;
+    public GameController gameController;
 
     public Vector3 lookAngle;
 
@@ -47,25 +41,45 @@ public class Entity : MonoBehaviour {
     public Vector3 lastMoving;
     [HideInInspector]
     public float guessingTime;
+    [HideInInspector]
+    public float respawnTime;
+    [HideInInspector]
+    public Vector3 velocity;
 
+    public int kills;
+    public int deaths;
+
+    //Component References
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
-
     [HideInInspector]
-    public GameController gameController;
+    new public Rigidbody rigidbody;
+    [HideInInspector]
+    new public CapsuleCollider collider;
 
     private void Awake() {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-    }
-
-    void Start() {
-        Health = 100;
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+
+    void Start() {
         currentGoal = transform.position;
-        idleTimer = 0.0f;
         OnStart();
+    }
+
+    public virtual void OnRespawn() {
+        idleTimer = 0.0f;
+        Health = 100;
+        currentTarget = null;
+        wandering = false;
+        idleTimer = 0.0f;
+        fireDelay = 0.0f;
+        hasShot = false;
+        guessingTime = 0.0f;
+        respawnTime = 0.0f;
+        entityController.OnRespawn(this);
     }
 
     protected virtual void OnStart() { }
@@ -94,7 +108,10 @@ public class Entity : MonoBehaviour {
     }
 
     //Called when entity successfully shoots a target
-    public virtual void OnHit() { }
+    public virtual void OnHit() {}
+
+    //Called when entity dies
+    public virtual void OnDied() {}
 
     public void ApplyRecoil(float recoil) {
         lookAngle.x -= recoil;

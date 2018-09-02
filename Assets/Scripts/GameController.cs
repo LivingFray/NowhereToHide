@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour {
 
     public int numPlayers;
 
+    public float respawnTime;
+
     void Start() {
         //Prevent players colliding
         int lp = LayerMask.NameToLayer("LocalPlayer");
@@ -24,6 +26,12 @@ public class GameController : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player").GetComponent<Entity>()
         };
         //Add AIs
+        for(int i = 0; i < numPlayers - 1; i++) {
+            entities.Add(Instantiate(ai).GetComponent<Entity>());
+        }
+        foreach(Entity ent in entities) {
+            RespawnEntity(ent);
+        }
     }
 
     public void RespawnEntity(Entity entity) {
@@ -32,6 +40,23 @@ public class GameController : MonoBehaviour {
         entity.transform.position = spawnAt.transform.position;
         entity.transform.rotation = spawnAt.transform.rotation;
         //Reinitialise
-        
+        entity.OnRespawn();
+    }
+
+    public void EntityDied(Entity entity) {
+        entity.deaths++;
+        entity.transform.position = new Vector3(0.0f, -100.0f, 0.0f);
+        entity.respawnTime = respawnTime;
+    }
+
+    private void Update() {
+        foreach(Entity ent in entities) {
+            if(ent.respawnTime > 0.0f) {
+                ent.respawnTime -= Time.deltaTime;
+                if(ent.respawnTime <= 0.0f) {
+                    RespawnEntity(ent);
+                }
+            }
+        }
     }
 }
