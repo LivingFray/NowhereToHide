@@ -30,19 +30,7 @@ public class PlayerController : EntityController {
         float xRot = -Input.GetAxisRaw("Mouse Y");
         entity.lookAngle += new Vector3(xRot, yRot, 0) * lookSensitivity;
 
-        //Clamp angles
-        entity.lookAngle.x = Mathf.Clamp(entity.lookAngle.x, -90.0f, 90.0f);
-
-        if(entity.lookAngle.y > 360.0f) {
-            entity.lookAngle.y -= 360.0f;
-        }
-
-        if(entity.lookAngle.y < 0.0f) {
-            entity.lookAngle.y += 360.0f;
-        }
-
-        entity.head.transform.localRotation = Quaternion.Euler(new Vector3(entity.lookAngle.x, 0.0f, 0.0f));
-        entity.rigidbody.MoveRotation(Quaternion.Euler(new Vector3(0.0f, entity.lookAngle.y, 0.0f)));
+        UpdateRotation(entity);
     }
 
     void MovePlayer(Entity entity) {

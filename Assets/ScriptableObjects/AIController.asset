@@ -13,3 +13,9 @@ MonoBehaviour:
   m_Name: AIController
   m_EditorClassIdentifier: 
   speed: 10
+  goalDistanceFudge: 4
+  distanceWeighting: 1
+  angleWeighting: 50
+  wanderRange: 10
+  mapSizeX: 100
+  mapSizeZ: 100
