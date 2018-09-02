@@ -23,3 +23,6 @@ MonoBehaviour:
   minTargetTime: 0.5
   maxTargetTime: 2
   accuracy: 0.1
+  continuedAccuracy: 0.2
+  minFireDelay: 0.2
+  maxFireDelay: 1

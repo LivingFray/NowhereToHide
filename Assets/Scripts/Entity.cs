@@ -76,7 +76,7 @@ public class Entity : MonoBehaviour {
     }
 
     //Returns true if the enemy was killed
-    public bool Damage(int damage) {
+    public virtual bool Damage(int damage) {
         Health -= damage;
         if (Health <= 0) {
             Health = 0;

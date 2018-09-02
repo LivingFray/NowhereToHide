@@ -7,6 +7,7 @@ public class Player : Entity {
     public GameObject crosshair;
     RectTransform crossTrans;
     public Text ammo;
+    public Image hurt;
 
     // Use this for initialization
     protected override void OnStart () {
@@ -35,10 +36,19 @@ public class Player : Entity {
                 crossTrans.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
         }
+        //Handle hurt display
+        if (hurt.color.a > 0.0f) {
+            hurt.color = new Color(hurt.color.r, hurt.color.g, hurt.color.b, hurt.color.a - Time.deltaTime);
+        }
         ammo.text = equippedGun.Ammo + "/" + equippedGun.Clip;
     }
 
     public override void OnHit() {
         crossTrans.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+    }
+
+    public override bool Damage(int damage) {
+        hurt.color = new Color(hurt.color.r, hurt.color.g, hurt.color.b, 0.25f);
+        return base.Damage(damage);
     }
 }
