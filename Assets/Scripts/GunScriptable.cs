@@ -27,7 +27,9 @@ public class GunScriptable : ScriptableObject {
     public float fireVolume;
 
     public AudioClip reload;
-
+    public float reloadPitchMin;
+    public float reloadPitchMax;
+    public float reloadVolume;
 
     public AudioClip empty;
     public float emptyPitchMin;

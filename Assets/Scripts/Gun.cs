@@ -125,6 +125,8 @@ public class Gun : MonoBehaviour {
             Clip += Ammo;
             Ammo = 0;
             reloading = gunProperties.reloadTime;
+            audioSource.pitch = Random.Range(gunProperties.reloadPitchMin, gunProperties.reloadPitchMax);
+            audioSource.PlayOneShot(gunProperties.reload, gunProperties.reloadVolume);
         }
     }
 }

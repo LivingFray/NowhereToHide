@@ -26,7 +26,10 @@ MonoBehaviour:
   firePitchMin: 0.75
   firePitchMax: 1.25
   fireVolume: 0.1
-  reload: {fileID: 0}
+  reload: {fileID: 8300000, guid: 30ee6ad0c17ebe247b9688060bf34325, type: 3}
+  reloadPitchMin: 0.9
+  reloadPitchMax: 1.1
+  reloadVolume: 0.1
   empty: {fileID: 8300000, guid: e1840d4461419c74791e3148ad79129a, type: 3}
   emptyPitchMin: 0.9
   emptyPitchMax: 1

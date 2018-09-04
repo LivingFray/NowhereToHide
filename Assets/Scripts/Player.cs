@@ -34,8 +34,11 @@ public class Player : Entity {
                 Cursor.visible = true;
             }
         }
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.Escape)) {
+            Application.Quit();
+        }
         //Handle resizing crosshair
-        if(crossTrans.localScale.x > 1.0f) {
+        if (crossTrans.localScale.x > 1.0f) {
             crossTrans.localScale -= new Vector3(1.0f, 1.0f, 1.0f) * Time.deltaTime;
             if(crossTrans.localScale.x < 1.0f) {
                 crossTrans.localScale = new Vector3(1.0f, 1.0f, 1.0f);
